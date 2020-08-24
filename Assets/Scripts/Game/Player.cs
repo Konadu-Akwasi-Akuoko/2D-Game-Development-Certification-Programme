@@ -74,11 +74,18 @@ public class Player : MonoBehaviour
     {
         if (_sppedCheck == false)
         {
-            //player movement in normal speed
+            //player movement in normal 
             playerSpeed = 5;
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
             Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+
+            //Creating the thrusters, when the left shift key is pressed,
+            //the speed of the player is changed to 8, when released it goes back to 5
+            if (Input.GetKey(KeyCode.Q))
+            {
+                playerSpeed = 8;
+            }
 
             transform.Translate(direction * playerSpeed * Time.deltaTime);
         }
