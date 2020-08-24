@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     private bool _shieldActive;
     [SerializeField]
     private GameObject shieldVisualizer;
+    private SpriteRenderer _spriteOfShield;
+    int _numberOfHits = 0;
     [SerializeField]
     private GameObject[] playerHurtVisualizer = new GameObject[2];
  
@@ -54,6 +56,9 @@ public class Player : MonoBehaviour
         //Grabbing the audiosource component from ths gameobject
         _audioSource = GetComponent<AudioSource>();
 
+        //grabbing the sprite rendrer in the shieldVisualizer
+        _spriteOfShield = shieldVisualizer.GetComponent<SpriteRenderer>();
+
     }
 
     // Update is called once per frame
@@ -82,7 +87,7 @@ public class Player : MonoBehaviour
 
             //Creating the thrusters, when the left shift key is pressed,
             //the speed of the player is changed to 8, when released it goes back to 5
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 playerSpeed = 8;
             }
@@ -138,8 +143,24 @@ public class Player : MonoBehaviour
         //making any code following the if statement obsolete.
         if (_shieldActive == true)
         {
-            _shieldActive = false;
-            shieldVisualizer.SetActive(false);
+            _numberOfHits++;
+
+            switch (_numberOfHits)
+            {
+                case 1:
+                    _spriteOfShield.color = Color.green;
+                    break;
+                case 2:
+                    _spriteOfShield.color = Color.red;
+                    break;
+                case 3:
+                    _shieldActive = false;
+                    _spriteOfShield.color = Color.white;
+                    _numberOfHits = 0;
+                    shieldVisualizer.SetActive(false);
+                    break;
+            }
+
             return;
         }
 
