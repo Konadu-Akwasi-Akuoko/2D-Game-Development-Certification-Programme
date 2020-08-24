@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -29,16 +30,22 @@ public class Player : MonoBehaviour
     int _numberOfHits = 0;
     [SerializeField]
     private GameObject[] playerHurtVisualizer = new GameObject[2];
- 
+
     //[SerializeField]
     //private GameObject _gameOverVisualizer;
 
     [SerializeField]
     private int _score;
 
+    private int _laserCount = 15;
+    [SerializeField]
+    private Text _laserText;
+
     private UIManager _uiManager;
 
     private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _noAmmoSound;
     [SerializeField]
     private AudioClip _laserSound;
 
@@ -58,6 +65,10 @@ public class Player : MonoBehaviour
 
         //grabbing the sprite rendrer in the shieldVisualizer
         _spriteOfShield = shieldVisualizer.GetComponent<SpriteRenderer>();
+
+        //laser count is always 15 at the start.
+        _laserCount = 15;
+        _laserText.text = "Ammo: " + _laserCount.ToString();
 
     }
 
@@ -124,16 +135,31 @@ public class Player : MonoBehaviour
         _canfire = Time.time + fireRate;
         if (_trippleShotCheck == false) //instantiate normal laser
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), transform.rotation);
+            if(_laserCount <= 15 && _laserCount != 0)
+            {
+                _laserCount--;
+                _laserText.text = "Ammo: " + _laserCount;
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), transform.rotation);
+
+                //playing the audio source, when the fire key is pressed
+                _audioSource.Play();
+            }
+            else if(_laserCount == 0)
+            {
+                _laserText.text = "Ammo: No Ammo";
+                _audioSource.PlayOneShot(_noAmmoSound, 1);
+            }
+           
         }
         else //instantiate triple laser
         {
             TrippleShotActive();
             Instantiate(_trippleShot, transform.position + new Vector3(-0.18f, 0, 0), Quaternion.identity);
+            //playing the audio source, when the fire key is pressed
+            _audioSource.Play();
         }
 
-        //playing the audio source, when the fire key is pressed
-        _audioSource.Play();
+        
     }
 
     public void Damage()
