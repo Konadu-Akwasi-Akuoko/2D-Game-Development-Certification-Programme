@@ -241,6 +241,15 @@ public class Player : MonoBehaviour
         _uiManager.ScoreUpdater(_score);
     }
 
+    public void AddAmmo()
+    {
+        int addAmmo;
+        int substaract = 15;
+        addAmmo = substaract - _laserCount;
+        _laserCount += addAmmo;
+        _laserText.text = "Ammo: " + _laserCount;
+    }
+
     //makes the tripple shot switch false
     IEnumerator TrippleShotSwitch()
     {

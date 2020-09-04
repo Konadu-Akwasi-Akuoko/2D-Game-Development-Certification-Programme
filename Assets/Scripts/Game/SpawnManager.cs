@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour
         while (true && _player != null)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9, 9), 6, 0);
-            Instantiate(powerUpRandomPrefab[Random.Range(0,3)], posToSpawn, Quaternion.identity);
+            Instantiate(powerUpRandomPrefab[3], posToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(10,11));
         }
        
