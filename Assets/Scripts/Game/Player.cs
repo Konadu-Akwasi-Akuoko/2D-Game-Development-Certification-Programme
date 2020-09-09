@@ -70,6 +70,8 @@ public class Player : MonoBehaviour
         _laserCount = 15;
         _laserText.text = "Ammo: " + _laserCount.ToString();
 
+        //_number of hits is always = 0
+        _numberOfHits = 0;
     }
 
     // Update is called once per frame
@@ -198,7 +200,7 @@ public class Player : MonoBehaviour
         }
 
         //we need to check if palyer health is 2, if true-we need to randomly spawn a playerhurt.
-        if (_playerHealth == 2)
+        else if (_playerHealth == 2)
         {
             playerHurtVisualizer[0].SetActive(true);
         }
@@ -249,6 +251,34 @@ public class Player : MonoBehaviour
         _laserCount += addAmmo;
         _laserText.text = "Ammo: " + _laserCount;
     }
+
+
+
+    //this function adds player life
+    public void AddLives()
+    {
+        if(_playerHealth == 3)
+        {
+            return;
+        }
+
+        _playerHealth++;
+        Debug.Log(_playerHealth);
+        _uiManager.UpdateLives(_playerHealth);
+
+        if (_playerHealth == 2)
+        {
+            playerHurtVisualizer[1].SetActive(false);
+        }
+        else if (_playerHealth == 3)
+        {
+            playerHurtVisualizer[0].SetActive(false);
+           // playerHurtVisualizer[2].SetActive(false);
+        }
+
+
+    }
+
 
     //makes the tripple shot switch false
     IEnumerator TrippleShotSwitch()

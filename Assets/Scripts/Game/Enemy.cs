@@ -63,12 +63,18 @@ public class Enemy : MonoBehaviour
     {
         if (gameObject != null)
         {
-            if (Time.time > _canFire)
+            // noticed that the enemy still fires even when dead because we desteroy the collider first,
+            //checking, when collider is null don't fire
+            if(gameObject.GetComponent<Collider2D>() != null)
             {
-                _fireRate = Random.Range(3.0f, 7.0f);
-                _canFire = Time.time + _fireRate;
-                Instantiate(_laserPfefab, transform.position, Quaternion.identity);
+                if (Time.time > _canFire)
+                {
+                    _fireRate = Random.Range(3.0f, 7.0f);
+                    _canFire = Time.time + _fireRate;
+                    Instantiate(_laserPfefab, transform.position, Quaternion.identity);
+                }
             }
+            
         }
       
     }

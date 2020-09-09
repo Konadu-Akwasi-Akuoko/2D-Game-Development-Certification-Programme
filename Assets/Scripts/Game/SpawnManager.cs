@@ -43,11 +43,11 @@ public class SpawnManager : MonoBehaviour
     //function for spawning power ups
     IEnumerator spawnPowerUpTripleRoutine()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         while (true && _player != null)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9, 9), 6, 0);
-            Instantiate(powerUpRandomPrefab[3], posToSpawn, Quaternion.identity);
+            Instantiate(powerUpRandomPrefab[Random.Range(0,4)], posToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(10,11));
         }
        
