@@ -68,6 +68,10 @@ public class PowerUp : MonoBehaviour
                         player.AddLives();
                         Destroy(this.gameObject);
                         break;
+                    case 5:
+                        player.MultiShotActive();
+                        Destroy(this.gameObject);
+                        break;
 
                 }
             }         

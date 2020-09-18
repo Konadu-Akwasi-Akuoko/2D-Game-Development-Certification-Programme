@@ -47,7 +47,24 @@ public class SpawnManager : MonoBehaviour
         while (true && _player != null)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9, 9), 6, 0);
-            Instantiate(powerUpRandomPrefab[Random.Range(0,4)], posToSpawn, Quaternion.identity);
+
+            //creating a probability system to handle the random rate at which power ups are spawn.
+            
+            int probabilitySpawn, commonPowerUp;
+            //a number is chosen from 1 to 95, if the number falls between 1 and 90 a common power up is spawned
+            //the probability of it spawning is 95%, compared to the other 5% for the rare powerup.
+            probabilitySpawn = Random.Range(1, 101);
+            commonPowerUp = 95;
+            
+            if(probabilitySpawn <= commonPowerUp)
+            {
+                Instantiate(powerUpRandomPrefab[Random.Range(5,6)], posToSpawn, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(powerUpRandomPrefab[5], posToSpawn, Quaternion.identity);
+            }
+ 
             yield return new WaitForSeconds(Random.Range(10,11));
         }
        

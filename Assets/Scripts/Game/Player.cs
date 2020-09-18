@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
     private bool _trippleShotCheck;
     private bool _sppedCheck;
     private bool _shieldActive;
+    //if this is true then you can instantite multishot.
+    public bool _multiShotActive;
+    [SerializeField]
+    private GameObject _multishot;
     [SerializeField]
     private GameObject shieldVisualizer;
     private SpriteRenderer _spriteOfShield;
@@ -135,7 +139,7 @@ public class Player : MonoBehaviour
         //making _canfire greater than time.time so that, 
         //this will wait until time.time is greater than _canfire again
         _canfire = Time.time + fireRate;
-        if (_trippleShotCheck == false) //instantiate normal laser
+        if (_trippleShotCheck == false && _multiShotActive == false) //instantiate normal laser
         {
             if(_laserCount <= 15 && _laserCount != 0)
             {
@@ -153,7 +157,7 @@ public class Player : MonoBehaviour
             }
            
         }
-        else //instantiate triple laser
+        else if(_trippleShotCheck==true && _multiShotActive== false) //instantiate triple laser
         {
             TrippleShotActive();
             Instantiate(_trippleShot, transform.position + new Vector3(-0.18f, 0, 0), Quaternion.identity);
@@ -161,7 +165,19 @@ public class Player : MonoBehaviour
             _audioSource.Play();
         }
 
-        
+        //if the bool turns true, instantiate all multishot
+        else if(_multiShotActive == true)
+        {
+            StartCoroutine(MultiShotSwitch());
+            GameObject clone = Instantiate(_multishot, transform.position + new Vector3(-2.131f, 2.25f, -3.341f), Quaternion.identity);
+
+            //destroy cloned object in 7 seconds, by that time it would have leave the screen where the player sees
+            if(clone != null)
+            {
+                Destroy(clone, 7.0f);
+            }
+
+        }
     }
 
     public void Damage()
@@ -237,6 +253,11 @@ public class Player : MonoBehaviour
         shieldVisualizer.SetActive(true);
     }
 
+    public void MultiShotActive()
+    {
+        _multiShotActive = true;
+    }
+
     public void AddScore()
     {
         _score+= 10;
@@ -273,7 +294,6 @@ public class Player : MonoBehaviour
         else if (_playerHealth == 3)
         {
             playerHurtVisualizer[0].SetActive(false);
-           // playerHurtVisualizer[2].SetActive(false);
         }
 
 
@@ -283,7 +303,7 @@ public class Player : MonoBehaviour
     //makes the tripple shot switch false
     IEnumerator TrippleShotSwitch()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
         _trippleShotCheck = false;
     }
 
@@ -292,6 +312,13 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
         _sppedCheck = false;
+    }
+
+    //this will make MultiShot stop working after 5 seconds
+    IEnumerator MultiShotSwitch()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _multiShotActive = false;
     }
 
     //calling damage function when we are hit by an enemy laser.

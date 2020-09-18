@@ -8,6 +8,7 @@ TagManager:
   - Laser
   - EnemyLaser
   - Enemy Laser
+  - MultiDirectionalShot
   layers:
   - Default
   - TransparentFX

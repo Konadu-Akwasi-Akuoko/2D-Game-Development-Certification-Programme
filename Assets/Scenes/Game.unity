@@ -440,6 +440,8 @@ MonoBehaviour:
   fireRate: 0.5
   _playerHealth: 3
   _trippleShot: {fileID: 7810208846070680235, guid: af520743676305f44b699a5d82bf57d2, type: 3}
+  _multiShotActive: 0
+  _multishot: {fileID: 258702822204833055, guid: 4ce0cdf3ee1338e4290521b268c21f43, type: 3}
   shieldVisualizer: {fileID: 479021133}
   playerHurtVisualizer:
   - {fileID: 1391855104}
@@ -507,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514755177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.09, z: 0}
+  m_LocalPosition: {x: 0, y: -1.82, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 479021134}
@@ -702,7 +704,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &598934072
 GameObject:
@@ -1893,6 +1895,7 @@ MonoBehaviour:
   - {fileID: 3017605118815172799, guid: 780e1390bb9b86f468740cbd43ab1d5a, type: 3}
   - {fileID: 6102795920314005859, guid: 1ba67eb13a9468e4bb463c8d26874829, type: 3}
   - {fileID: 5911840374407511835, guid: 15e560a95b4d0104eb9c8e32198cfa7d, type: 3}
+  - {fileID: 8597514276515274490, guid: 4ddaccc62a4f9eb49a3e1f4998196a84, type: 3}
 --- !u!4 &1664268172
 Transform:
   m_ObjectHideFlags: 0
@@ -2183,6 +2186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Asteroid
       objectReference: {fileID: 0}
+    - target: {fileID: 2809620789971475248, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6648083234940071783, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
       propertyPath: _explosion
       value: 
@@ -2193,7 +2200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7958227245287277684, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.86
+      value: 3.34
       objectReference: {fileID: 0}
     - target: {fileID: 7958227245287277684, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2217,7 +2224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7958227245287277684, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7958227245287277684, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

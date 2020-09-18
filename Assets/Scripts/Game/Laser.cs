@@ -29,6 +29,7 @@ public class Laser : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
 
     void MoveDown()
