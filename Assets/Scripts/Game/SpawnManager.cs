@@ -21,6 +21,7 @@ public class SpawnManager : MonoBehaviour
         //startSpawning();
     }
 
+    //startSpawning is called when the "asteriod" is destroyed LOOK(AsteriodBehaviour.cs)
     public void startSpawning()
     {
         StartCoroutine(spawnEnemyRoutine());
@@ -58,7 +59,7 @@ public class SpawnManager : MonoBehaviour
             
             if(probabilitySpawn <= commonPowerUp)
             {
-                Instantiate(powerUpRandomPrefab[Random.Range(5,6)], posToSpawn, Quaternion.identity);
+                Instantiate(powerUpRandomPrefab[Random.Range(1,5)], posToSpawn, Quaternion.identity);
             }
             else
             {

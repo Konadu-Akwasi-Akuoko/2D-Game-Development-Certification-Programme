@@ -9,6 +9,16 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float playerSpeed=5.0f;
 
+    //Here we created a variable from 1 to 10 thus the _thrusterScale, it's primary job is to reduce(--)
+    //when the leftshift key is pressed and to replenish when the left key comes up.
+    //And also we have _thrusterImg array, an image UI was used to visualize the scaling bar( thus _thrusterImg),
+    //the _thrusterImg was used to show the scale at which the _thrusterScale was
+    [SerializeField]
+    private int _thrusterScale = default;
+    [SerializeField]
+    private Image[] _thrusterImg;
+
+
     [SerializeField]
     private GameObject _laserPrefab;
 
@@ -76,6 +86,9 @@ public class Player : MonoBehaviour
 
         //_number of hits is always = 0
         _numberOfHits = 0;
+
+        // scaleThrusters is always 10 at start.
+        _thrusterScale = 10;
     }
 
     // Update is called once per frame
@@ -103,11 +116,28 @@ public class Player : MonoBehaviour
             Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
             //Creating the thrusters, when the left shift key is pressed,
-            //the speed of the player is changed to 8, when released it goes back to 5
-            if (Input.GetKey(KeyCode.LeftShift))
+            //I created a courotine called ThrusterAdd/ThrusterSubstract, what it basically does is 
+            //when the shift key is pressed it substracts 1 from _thrusterScale every 0.5secs
+            //when realesed it also adds 1 to _thrusterScale every 1secs
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                StopCoroutine("ThrusterAdd");
+                StartCoroutine("ThrusterSubstract");
+            }
+            else if(Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                StopCoroutine("ThrusterSubstract");
+                StartCoroutine("ThrusterAdd");
+            }
+
+            //the speed of the player is changed to 8, when the leftshift key is pressed,
+            //when released it goes back to 5
+            if (_thrusterScale > 0 && Input.GetKey(KeyCode.LeftShift))
             {
                 playerSpeed = 8;
             }
+            else
+                playerSpeed = 5;
 
             transform.Translate(direction * playerSpeed * Time.deltaTime);
         }
@@ -296,7 +326,6 @@ public class Player : MonoBehaviour
             playerHurtVisualizer[0].SetActive(false);
         }
 
-
     }
 
 
@@ -321,9 +350,61 @@ public class Player : MonoBehaviour
         _multiShotActive = false;
     }
 
+
+    // when this courotine is called, it substracts 1 from _thrusterScale
+    //the for loop also updates the _thrusterImg, by using the SetActive function which can turn it on or off
+    IEnumerator ThrusterSubstract()
+    {
+        while (true)
+        {
+            if (_thrusterScale > 0)
+            {
+                _thrusterScale -= 1;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (i <= _thrusterScale)
+                {
+                    _thrusterImg[i].gameObject.SetActive(true);
+                }
+                else
+                    _thrusterImg[i].gameObject.SetActive(false);
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    // when this courotine is called, it adds 1 to _thrusterScale
+    //the for loop also updates the _thrusterImg, by using the SetActive function which can turn it on or off
+    IEnumerator ThrusterAdd()
+    {
+        while (true)
+        {
+            if (_thrusterScale < 10)
+            {
+                _thrusterScale += 1;
+            }
+            else
+                yield break;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (i <= _thrusterScale)
+                {
+                    _thrusterImg[i].gameObject.SetActive(true);
+                }
+                else
+                    _thrusterImg[i].gameObject.SetActive(false);
+            }
+
+            yield return new WaitForSeconds(1.0f);
+        }
+      
+    }
+
     //calling damage function when we are hit by an enemy laser.
-    //NB: One of the enemyLaser's rigidbody is removed so it cant also call Danage();
-    //Thus though EnemyLaser is 2 only one have arigidbody capable of colliding
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("EnemyLaser"))
