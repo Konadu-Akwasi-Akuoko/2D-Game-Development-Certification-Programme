@@ -11,12 +11,7 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private AudioClip _powerUpClip;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-      
-    }
-
+ 
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +27,7 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if(collision.CompareTag("Player"))
         {
             Player player = collision.transform.GetComponent<Player>();
             AudioSource.PlayClipAtPoint(_powerUpClip, transform.position);

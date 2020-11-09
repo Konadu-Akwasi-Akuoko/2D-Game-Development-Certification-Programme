@@ -15,12 +15,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] powerUpRandomPrefab;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //startSpawning();
-    }
-
     //startSpawning is called when the "asteriod" is destroyed LOOK(AsteriodBehaviour.cs)
     public void startSpawning()
     {

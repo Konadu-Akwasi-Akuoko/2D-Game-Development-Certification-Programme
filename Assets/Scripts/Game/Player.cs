@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserSound;
 
+    // camera shake script
+    private CameraShake _camerashake;
+
 
     // Start is called before the first frame update
     void Start()
@@ -89,23 +92,31 @@ public class Player : MonoBehaviour
 
         // scaleThrusters is always 10 at start.
         _thrusterScale = 10;
+
+        //accessing the camera shake script.
+        _camerashake = GameObject.FindWithTag("MainCamera").GetComponent<CameraShake>();
+        if (_camerashake == null)
+        {
+            Debug.LogError("Could not find CameraShake script");
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //Calling the function responsible for the palyer movement.
-        playerMovementCalculation();
+        PlayerMovementCalculation();
 
         //creating a cooldown time for the laser
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
-            fireLaser();
+            FireLaser();
         }
 
     }
 
-    void playerMovementCalculation()
+    void PlayerMovementCalculation()
     {
         if (_sppedCheck == false)
         {
@@ -121,13 +132,13 @@ public class Player : MonoBehaviour
             //when realesed it also adds 1 to _thrusterScale every 1secs
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                StopCoroutine("ThrusterAdd");
-                StartCoroutine("ThrusterSubstract");
+                StopCoroutine(nameof(ThrusterAdd));
+                StartCoroutine(nameof(ThrusterSubstract));
             }
             else if(Input.GetKeyUp(KeyCode.LeftShift))
             {
-                StopCoroutine("ThrusterSubstract");
-                StartCoroutine("ThrusterAdd");
+                StopCoroutine(nameof(ThrusterSubstract));
+                StartCoroutine(nameof(ThrusterAdd));
             }
 
             //the speed of the player is changed to 8, when the leftshift key is pressed,
@@ -164,7 +175,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void fireLaser()
+    void FireLaser()
     {
         //making _canfire greater than time.time so that, 
         //this will wait until time.time is greater than _canfire again
@@ -240,6 +251,10 @@ public class Player : MonoBehaviour
 
         _playerHealth -= 1;
         _uiManager.UpdateLives(_playerHealth);
+        
+        //calling a function to call the courotine
+        _camerashake.StartShake();
+
         if (_playerHealth == 0)
         {
             Destroy(this.gameObject);
