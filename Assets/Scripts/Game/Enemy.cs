@@ -18,8 +18,9 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //starting position
+        
         transform.position = new Vector3(Random.Range(-9.0f, 9.0f), 7, transform.position.z);
+        transform.Rotate (transform.rotation.x, transform.rotation.y, Random.Range(-45, 45));
 
         _player = GameObject.Find("Player").GetComponent<Player>();
         
@@ -48,13 +49,12 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovementg()
     {
+                transform.Translate(-Vector3.up * enemySpeed * Time.deltaTime);
 
-        transform.Translate(-Vector3.up * enemySpeed * Time.deltaTime);
-
-        if (transform.position.y <= -5.5f)
-        {
-            transform.position = new Vector3(Random.Range(-9.0f, 9.0f), 7, transform.position.z);
-        }
+                if (transform.position.y <= -5.5f)
+                {
+                    transform.position = new Vector3(Random.Range(-9.0f, 9.0f), 7, transform.position.z);
+                }
 
     }
 
@@ -65,14 +65,11 @@ public class Enemy : MonoBehaviour
         {
             // noticed that the enemy still fires even when dead because we desteroy the collider first,
             //checking, when collider is null don't fire
-            if(gameObject.GetComponent<Collider2D>() != null)
+            if(gameObject.GetComponent<Collider2D>() != null && Time.time > _canFire)
             {
-                if (Time.time > _canFire)
-                {
                     _fireRate = Random.Range(3.0f, 7.0f);
                     _canFire = Time.time + _fireRate;
-                    Instantiate(_laserPfefab, transform.position, Quaternion.identity);
-                }
+                    Instantiate(_laserPfefab, transform.position, transform.rotation);
             }
             
         }
@@ -82,7 +79,7 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log("We collided");
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             //make enemy stop
             enemySpeed = 0;
@@ -101,7 +98,7 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject,2.8f);
         }
 
-        else if (other.gameObject.tag == "Laser")
+        else if (other.gameObject.CompareTag("Laser"))
         {
             enemySpeed = 0;
             Destroy(other.gameObject);

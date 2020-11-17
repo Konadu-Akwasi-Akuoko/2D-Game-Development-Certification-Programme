@@ -329,7 +329,6 @@ public class Player : MonoBehaviour
         }
 
         _playerHealth++;
-        Debug.Log(_playerHealth);
         _uiManager.UpdateLives(_playerHealth);
 
         if (_playerHealth == 2)

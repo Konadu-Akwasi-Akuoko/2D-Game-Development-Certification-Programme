@@ -16,14 +16,14 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] powerUpRandomPrefab;
 
     //startSpawning is called when the "asteriod" is destroyed LOOK(AsteriodBehaviour.cs)
-    public void startSpawning()
+    public void StartSpawning()
     {
-        StartCoroutine(spawnEnemyRoutine());
-        StartCoroutine(spawnPowerUpTripleRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerUpTripleRoutine());
     }
 
     //function for spawning enemies after 3secs of destroyiny the asteriod
-    IEnumerator spawnEnemyRoutine()
+    IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(3.0f);
         while (true && _player != null)
@@ -36,7 +36,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     //function for spawning power ups
-    IEnumerator spawnPowerUpTripleRoutine()
+    IEnumerator SpawnPowerUpTripleRoutine()
     {
         yield return new WaitForSeconds(1.0f);
         while (true && _player != null)

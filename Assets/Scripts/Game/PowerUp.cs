@@ -11,7 +11,7 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private AudioClip _powerUpClip;
 
- 
+
     // Update is called once per frame
     void Update()
     {
