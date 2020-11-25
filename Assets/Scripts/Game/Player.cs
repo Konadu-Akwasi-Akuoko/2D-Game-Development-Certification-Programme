@@ -66,6 +66,10 @@ public class Player : MonoBehaviour
     // camera shake script
     private CameraShake _camerashake;
 
+    // Thruster audio source
+    [SerializeField]
+    private AudioSource _thrusterAudio;
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,7 +89,7 @@ public class Player : MonoBehaviour
 
         //laser count is always 15 at the start.
         _laserCount = 15;
-        _laserText.text = "Ammo: " + _laserCount.ToString();
+        _laserText.text = "Ammo: " + _laserCount.ToString() +"/15";
 
         //_number of hits is always = 0
         _numberOfHits = 0;
@@ -146,9 +150,18 @@ public class Player : MonoBehaviour
             if (_thrusterScale > 0 && Input.GetKey(KeyCode.LeftShift))
             {
                 playerSpeed = 8;
+                // Playing rocket sound, when the leftshiftkey is down it starts playing, needed to put
+                // Inside another if statement because of Input.GetKey which makes the song restart over and over when pressed.
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    _thrusterAudio.Play();
+                }
             }
             else
+            {
                 playerSpeed = 5;
+                _thrusterAudio.Stop();
+            }
 
             transform.Translate(direction * playerSpeed * Time.deltaTime);
         }
@@ -185,7 +198,9 @@ public class Player : MonoBehaviour
             if(_laserCount <= 15 && _laserCount != 0)
             {
                 _laserCount--;
-                _laserText.text = "Ammo: " + _laserCount;
+
+                //The ammo will now come in the form current/max.
+                _laserText.text = "Ammo: " + _laserCount + "/15";
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), transform.rotation);
 
                 //playing the audio source, when the fire key is pressed
@@ -193,7 +208,9 @@ public class Player : MonoBehaviour
             }
             else if(_laserCount == 0)
             {
-                _laserText.text = "Ammo: No Ammo";
+                //When ever the player ammo finishes, the text turns red,to alert the player.
+                _laserText.color = Color.red;
+                _laserText.text = "Ammo: 0/15";
                 _audioSource.PlayOneShot(_noAmmoSound, 1);
             }
            

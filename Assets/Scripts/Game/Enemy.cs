@@ -20,6 +20,9 @@ public class Enemy : MonoBehaviour
     {
         
         transform.position = new Vector3(Random.Range(-9.0f, 9.0f), 7, transform.position.z);
+        
+        // Rotating the enemy with an angle, this makes the enemy a little bit slanted.
+        // The enemy also goes forward, but also at an angle.
         transform.Rotate (transform.rotation.x, transform.rotation.y, Random.Range(-45, 45));
 
         _player = GameObject.Find("Player").GetComponent<Player>();
