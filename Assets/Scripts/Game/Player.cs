@@ -197,6 +197,12 @@ public class Player : MonoBehaviour
         {
             if(_laserCount <= 15 && _laserCount != 0)
             {
+                //
+                if(_laserText.color == Color.red)
+                {
+                    _laserText.color = Color.white;
+                }
+
                 _laserCount--;
 
                 //The ammo will now come in the form current/max.
@@ -274,6 +280,12 @@ public class Player : MonoBehaviour
 
         if (_playerHealth == 0)
         {
+            //Turning the thruster audio off if it is on otherwise it won't turn off
+            if (_thrusterAudio.isPlaying)
+            {
+                _thrusterAudio.Stop();
+            }
+
             Destroy(this.gameObject);
         }
 

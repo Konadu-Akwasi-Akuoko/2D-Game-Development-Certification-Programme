@@ -9,6 +9,7 @@ TagManager:
   - EnemyLaser
   - Enemy Laser
   - MultiDirectionalShot
+  - Spawn Manager
   layers:
   - Default
   - TransparentFX

@@ -28,7 +28,7 @@ public class AsteriodBehaviour : MonoBehaviour
             //when the laser collides
             Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
-            spawnManager.StartSpawning();
+            spawnManager.StartCoroutine("StartSpawning");
             Destroy(this.gameObject);           
         }
     }

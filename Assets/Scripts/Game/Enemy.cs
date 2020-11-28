@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3.0f;
     private float _canFire = -1.0f;
 
+    private SpawnManager _spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,10 +43,18 @@ public class Enemy : MonoBehaviour
 
         _enemyExplosion = GetComponent<AudioSource>();
 
+        //
+        _spawnManager = GameObject.FindWithTag("Spawn Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("SpawnManager is NULL");
+        }
+
     }
     // Update is called once per frame
     void Update()
     {
+        //_spawnManager.EnemyKilled();
         CalculateMovementg();
 
         EnemyFireLaser();
@@ -86,6 +96,7 @@ public class Enemy : MonoBehaviour
         {
             //make enemy stop
             enemySpeed = 0;
+            _spawnManager.EnemyKilled();
             //Debug.Log("If is called");
             if (other != null)
             {
@@ -94,6 +105,9 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
 
             _enemyExplosion.Play();
+
+            //
+            //
 
             //first destroy the collider before the actual destroy 
             Destroy(GetComponent<Collider2D>());
@@ -104,6 +118,7 @@ public class Enemy : MonoBehaviour
         else if (other.gameObject.CompareTag("Laser"))
         {
             enemySpeed = 0;
+            _spawnManager.EnemyKilled();
             Destroy(other.gameObject);
 
             if(_player != null)
@@ -114,7 +129,6 @@ public class Enemy : MonoBehaviour
             //calls this trigger when a laser collides with our object and plays the animation
             _anim.SetTrigger("OnEnemyDeath");
             _enemyExplosion.Play();
-
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject,2.8f);
         }

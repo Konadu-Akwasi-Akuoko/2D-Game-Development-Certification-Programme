@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
     public void ScoreUpdater(int playerscore)
     {
         //making the score to be displayed using the tostring keyword
-        _scoreText.text = "Score: 15" + playerscore.ToString();
+        _scoreText.text = "Score: " + playerscore.ToString();
     }
 
     public void UpdateLives(int currentLives)
