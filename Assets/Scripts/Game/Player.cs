@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _trippleShot;
+    //Creating a bool for the slownees negative poweup.
+    private bool _slowPowerUP = default;
     private bool _trippleShotCheck;
     private bool _sppedCheck;
     private bool _shieldActive;
@@ -122,7 +124,7 @@ public class Player : MonoBehaviour
 
     void PlayerMovementCalculation()
     {
-        if (_sppedCheck == false)
+        if (_sppedCheck == false && _slowPowerUP == false)
         {
             //player movement in normal 
             playerSpeed = 5;
@@ -165,6 +167,20 @@ public class Player : MonoBehaviour
 
             transform.Translate(direction * playerSpeed * Time.deltaTime);
         }
+
+        //When this if method becomes true(if a player colllects a slowness powerup), the 
+        //speed of the player is changed to 1, a courotine is called, the courotine will
+        //later bring the speed back to it's original value wich is 5.
+        else if(_slowPowerUP == true && _sppedCheck == false)
+        {
+            playerSpeed = 1;
+            StartCoroutine(SlownessFade());
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+            transform.Translate(direction * playerSpeed * Time.deltaTime);
+        }
+
         else
         {
             SpeedActive();
@@ -197,7 +213,7 @@ public class Player : MonoBehaviour
         {
             if(_laserCount <= 15 && _laserCount != 0)
             {
-                //
+                //checking to see if the lasertext is red, if so, it changes back to white.
                 if(_laserText.color == Color.red)
                 {
                     _laserText.color = Color.white;
@@ -371,6 +387,13 @@ public class Player : MonoBehaviour
 
     }
 
+    //This function is called from PowerUp.cs, it is called if and only
+    //if the power up collected by the player is the slowness power up.
+    public void SlownessPowerUp()
+    {
+        _slowPowerUP = true;
+    }
+
 
     //makes the tripple shot switch false
     IEnumerator TrippleShotSwitch()
@@ -445,6 +468,15 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
         }
       
+    }
+
+    //This courotine, after 5 seconds reverts the _slowPowerUp to false, this
+    //returns the initial value of the speed which is 5.
+    IEnumerator SlownessFade()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _slowPowerUP = false; 
+        yield break;    
     }
 
     //calling damage function when we are hit by an enemy laser.

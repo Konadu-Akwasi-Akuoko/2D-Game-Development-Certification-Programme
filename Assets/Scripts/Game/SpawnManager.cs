@@ -137,11 +137,11 @@ public class SpawnManager : MonoBehaviour
             
             if(probabilitySpawn <= commonPowerUp)
             {
-                Instantiate(powerUpRandomPrefab[Random.Range(1,5)], posToSpawn, Quaternion.identity);
+                Instantiate(powerUpRandomPrefab[Random.Range(0,6)], posToSpawn, Quaternion.identity);
             }
             else
             {
-                Instantiate(powerUpRandomPrefab[5], posToSpawn, Quaternion.identity);
+                Instantiate(powerUpRandomPrefab[6], posToSpawn, Quaternion.identity);
             }
  
             yield return new WaitForSeconds(Random.Range(10,11));

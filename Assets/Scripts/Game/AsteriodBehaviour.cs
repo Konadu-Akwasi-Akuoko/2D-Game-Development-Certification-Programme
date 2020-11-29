@@ -19,7 +19,7 @@ public class AsteriodBehaviour : MonoBehaviour
     void Update()
     {
         transform.Rotate(Vector3.forward * Time.deltaTime * _rotationSpeed);
-    }
+    } 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

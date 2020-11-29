@@ -2596,7 +2596,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d9cec9af4eda29d46b5e73d0f95e2fa9, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.93
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2851,6 +2851,7 @@ MonoBehaviour:
   - {fileID: 3017605118815172799, guid: 780e1390bb9b86f468740cbd43ab1d5a, type: 3}
   - {fileID: 6102795920314005859, guid: 1ba67eb13a9468e4bb463c8d26874829, type: 3}
   - {fileID: 5911840374407511835, guid: 15e560a95b4d0104eb9c8e32198cfa7d, type: 3}
+  - {fileID: 5814740930540399631, guid: 983996a7f8e134849a728a90dbdf9df8, type: 3}
   - {fileID: 8597514276515274490, guid: 4ddaccc62a4f9eb49a3e1f4998196a84, type: 3}
   _numberOfEnemySpawned: 0
   _wave: 0
@@ -3275,6 +3276,10 @@ PrefabInstance:
       propertyPath: _explosion
       value: 
       objectReference: {fileID: 7859896788025366877, guid: e8f3616d58b6be64283ae47bd7d0302e, type: 3}
+    - target: {fileID: 6648083234940071783, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
+      propertyPath: ata
+      value: 0.29
+      objectReference: {fileID: 0}
     - target: {fileID: 7958227245287277684, guid: bc4886347d2141d48860be1bdb040bd0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

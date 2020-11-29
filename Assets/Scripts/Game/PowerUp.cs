@@ -64,6 +64,10 @@ public class PowerUp : MonoBehaviour
                         Destroy(this.gameObject);
                         break;
                     case 5:
+                        player.SlownessPowerUp();
+                        Destroy(this.gameObject);
+                        break;
+                    case 6:
                         player.MultiShotActive();
                         Destroy(this.gameObject);
                         break;

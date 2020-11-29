@@ -96,7 +96,10 @@ public class Enemy : MonoBehaviour
         {
             //make enemy stop
             enemySpeed = 0;
+
+            //Calling this function on SpwanManager.cs to increment the value of enemies killed
             _spawnManager.EnemyKilled();
+
             //Debug.Log("If is called");
             if (other != null)
             {
